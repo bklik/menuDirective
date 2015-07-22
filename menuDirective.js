@@ -67,10 +67,18 @@ angular.module('menuDirective', ['styleSheetFactory'])
 
             var clickHandler = function(event) {
                 event.stopPropagation();
+                resetMenu();
 
                 var subMenu = event.target.querySelector('sub-menu');
                 if(subMenu != null) {
                     subMenu.classList.toggle('show');
+                    var parent = event.target.parentNode;
+                    while(parent.nodeName != 'BODY') {
+                        if(parent.nodeName == 'SUB-MENU') {
+                            parent.classList.toggle('show');
+                        }
+                        parent = parent.parentNode;
+                    }
                 } else {
                     selection.push(event.target.getAttribute('label'));
 
